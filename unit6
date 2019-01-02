@@ -1,0 +1,145 @@
+CREATE DATABASE library;
+USE library;
+
+CREATE TABLE Book(
+BookID INT(9) NOT NULL PRIMARY KEY UNIQUE AUTO_INCREMENT,
+ISBN CHAR(7)NOT NULL UNIQUE,
+Title VARCHAR(100) NOT NULL,
+Author VARCHAR(30)NOT NULL,
+Cost DECIMAL(10,2) NOT NULL
+);
+
+CREATE TABLE Bookcopy(
+BookcopyID INT(9) NOT NULL PRIMARY KEY UNIQUE AUTO_INCREMENT,
+Book_id INT(9) NOT NULL,
+ISBN INT(7) NOT NULL,
+SeqNumber INT(2) NOT NULL,
+PubDate DATE NOT NULL,
+FOREIGN KEY (Book_id)
+REFERENCES Book(BookID)
+);
+
+CREATE TABLE Borrower(
+LibCardID INT (9) NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
+Name VARCHAR (30) NOT NULL,
+Address VARCHAR (30)NOT NULL,
+PostalCode INT (5) NOT NULL,
+Phone CHAR (8) NOT NULL,
+MembDate DATE NOT NULL
+);
+
+CREATE TABLE BookLended(
+BookLendedID INT(9) NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
+LibCard_id INT(9) NOT NULL,
+OutDate DATE NOT NULL,
+ReturnDate DATE NOT NULL,
+ISBN CHAR(7) NOT NULL,
+SeqNumb INT(2) NOT NULL,
+Librarian_id INT(2) NOT NULL,
+FOREIGN KEY (LibCard_id)
+REFERENCES Borrower(LibCardID),
+FOREIGN KEY (Librarian_id)
+REFERENCES Librarian(LibrarianID)
+);
+
+CREATE TABLE Librarian(
+LibrarianID INT (2) NOT NULL PRIMARY KEY,
+Name VARCHAR(30) NOT NULL,
+Phone CHAR(8) NOT NULL,
+Supervisor INT(2),
+FOREIGN KEY (Supervisor)
+REFERENCES Librarian(LibrarianID)
+);
+
+//Insert Statements
+
+INSERT INTO Book(ISBN, Title, Author,Cost)
+VALUES (1441438,'Alice in Wonderland','Lewis Carroll',7.95);
+INSERT INTO Book(ISBN, Title, Author,Cost)
+VALUES (6006374,'A First Course in Database Systems(3rd ed.)','Jeffrey Ullman',9.49);
+INSERT INTO Book(ISBN, Title, Author,Cost)
+VALUES (3523323,'Database System Concepts','Abraham Silberschatz',119.67);
+INSERT INTO Book(ISBN, Title, Author,Cost)
+VALUES (1429477,"Grimm's Fairy Tales",'Jacob Grimm',26.99);
+INSERT INTO Book(ISBN, Title, Author,Cost)
+VALUES (1486025,"A Tale of Two Cities",'Charles Dickens',7.95);
+INSERT INTO Book(ISBN, Title, Author,Cost)
+VALUES (1853602,"War and Peace",'Leon Tolstoy',7.99);
+INSERT INTO Book(ISBN, Title, Author,Cost)
+VALUES (1904129,"The Scarlet Letter",'Nathaniel Hawthorne',7.95);
+INSERT INTO Book(ISBN, Title, Author,Cost)
+VALUES (1593832,"Pride and Prejudice",'Jane Austen',7.95);
+INSERT INTO Book(ISBN, Title, Author,Cost)
+VALUES (1538243,"Pride and Prejudice",'Jane Austen',7.95);
+/* Insert statements for the table Bookcopy */
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (1,1441438,1,19970501);
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (2,6006374,1,20071006);
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (2,6006374,2,20071006);
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (3,3523323,1,20100127);
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (4,1429477,1,20100127);
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (4,1429477,2,20100127);
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (4,1429477,3,20100127);
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (4,1429477,4,20100127);
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (5,1486025,1,20101201);
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (6,1853602,1,20070109);
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (6,1853602,2,20070109);
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (7,1904129,1,20091001);
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (8,1593832,1,20040920);
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (9,1538243,1,20040920);
+INSERT INTO Bookcopy(Book_id,ISBN,SeqNumber,PubDate)
+VALUES (9,1538243,2,20040920)
+/* Insert statements for the table Borrower */
+INSERT INTO Borrower(Name,Address,PostalCode,Phone,MembDate)
+VALUES ('Samil Shah','123 Home st', 62989, '555-1212',20080201);
+INSERT INTO Borrower(Name,Address,PostalCode,Phone,MembDate)
+VALUES ('Tim Jones','3435 Main st.', 54232, '555-2934',	20110713);
+INSERT INTO Borrower(Name,Address,PostalCode,Phone,MembDate)
+VALUES ('Sue Smith','2176 Baker st.', 43542, '555-6723', 20050510);
+INSERT INTO Borrower(Name,Address,PostalCode,Phone,MembDate)
+VALUES ('Jeff Bridges','176 Right st.', 28460, '555-1745', 20100620);
+INSERT INTO Borrower(Name,Address,PostalCode,Phone,MembDate)
+VALUES ('Steve Smith','435 Main St.', 28454, '555-6565', 20050518);
+INSERT INTO Borrower(Name,Address,PostalCode,Phone,MembDate)
+VALUES ('Arun Goel','34 Home St.', 56234, '555-4889', 20080315);
+INSERT INTO Borrower(Name,Address,PostalCode,Phone,MembDate)
+VALUES ('Jane Doe','65 Water St.', 42358, '555-4581', 20110907);
+INSERT INTO Borrower(Name,Address,PostalCode,Phone,MembDate)
+VALUES ('Jim Jones','23 Hill Drive', 85423, '555-7891', 20101123);
+/* Insert statements for the table Librarian */
+INSERT INTO Librarian(LibrarianID,Name,Phone,Supervisor)
+VALUES (1,'Gertrude Smith','555-1212',NULL);
+INSERT INTO Librarian(LibrarianID,Name,Phone,Supervisor)
+VALUES (2,'Mable Markham','555-1212',1);
+INSERT INTO Librarian(LibrarianID,Name,Phone,Supervisor)
+VALUES (3,'Penelope Pretty','555-1212',1);
+INSERT INTO Librarian(LibrarianID,Name,Phone,Supervisor)
+VALUES (4,'Olga Brown','555-2300',1);
+/* Insert statements for the table BookLended */
+INSERT INTO BookLended(LibCard_id,OutDate,ReturnDate,ISBN,SeqNumb,Librarian_id)
+VALUES (2,20101201,20131020,1441438,1,1);
+INSERT INTO BookLended(LibCard_id,OutDate,ReturnDate,ISBN,SeqNumb,Librarian_id)
+VALUES (5,20101201,20101001,6006374,2,2);
+INSERT INTO BookLended(LibCard_id,OutDate,ReturnDate,ISBN,SeqNumb,Librarian_id)
+VALUES (2,20101201,20120120,3523323,1,2);
+INSERT INTO BookLended(LibCard_id,OutDate,ReturnDate,ISBN,SeqNumb,Librarian_id)
+VALUES (8,20101201,20150127,1429477,1,3);
+INSERT INTO BookLended(LibCard_id,OutDate,ReturnDate,ISBN,SeqNumb,Librarian_id)
+VALUES (8,20101201,20150701,1853602,2,4);
+INSERT INTO BookLended(LibCard_id,OutDate,ReturnDate,ISBN,SeqNumb,Librarian_id)
+VALUES (8,20101201,20150823,1904129,1,2);
+
+/* ********* */
